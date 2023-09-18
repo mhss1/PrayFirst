@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">فَصَلّ</string>
+    <string name="main_screen_title">الرئيسية</string>
+    <string name="settings_screen_title">الاعدادات</string>
+    <string name="search">بحث</string>
+    <string name="detect_location">تعرف على الموقع تلقائيًا</string>
+    <string name="or">أو</string>
+    <string name="search_address">ابحث عن موقع يدويا</string>
+    <string name="no_overlay_permission_message">اذن \"الظهور في الأعلى\" مطلوب للميزة الاساسية للتطبيق. الرجاء منح الأذن.</string>
+    <string name="grant_permission">منح الأذن</string>
+    <string name="sunrise">الشروق</string>
+    <string name="zuhr">الظهر</string>
+    <string name="jumuaa">الجمعة</string>
+    <string name="asr">العصر</string>
+    <string name="maghrib">المغرب</string>
+    <string name="isha">العشاء</string>
+    <string name="fajr">الفجر</string>
+    <string name="internet_error">لا يوجد اتصال بالأنترنت</string>
+    <string name="no_data_for_location">لم يتم الحصول على معلومات لهذا الموقع</string>
+    <string name="unknown_error">حدث خطأ غير معروف</string>
+    <string name="add_location">أدخل الموقع</string>
+    <string name="location_detection_failed">فشل الحصول على الموقع</string>
+    <string name="location_permission_rationale">أذن الموقع مطلوب للتعرف على موقعك</string>
+    <string name="gps_fail_message">يجب تشغيل الموقع على جهازك للتعرف على موقعك</string>
+    <string name="lock_screen_on_time_start">قفل الشاشة عند موعد الصلاة</string>
+    <string name="pray_first">صَلِّ أولًا</string>
+    <string name="prayer_x_time_started">دخل وقت صلاة %1$s</string>
+    <string name="time_to_unlock">الوقت المتبقى لفتح الشاشة</string>
+
+    <string name="prayer_on_time_hadeeth">
+       عن ابن مسعود رضي الله عنه أن رجلًا سأل النبي صلى الله عليه وسلم: أي الأعمال أفضل؟ قال: الصلاة لوقتها وبر الوالدين ثم الجهاد في سبيل الله
+    </string>
+    <string name="lock_screen_period">مدة قفل الشاشة</string>
+    <string name="minutes">دقائق</string>
+</resources>

@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Pray First</string>
+    <string name="main_screen_title">Home</string>
+    <string name="settings_screen_title">Settings</string>
+    <string name="search">Search</string>
+    <string name="detect_location">Detect location</string>
+    <string name="or">OR</string>
+    <string name="search_address">Find prayer times by address</string>
+    <string name="no_overlay_permission_message">\"Appear on Top\" permission is required for the app main functionality.\nPlease grant the permission.</string>
+    <string name="grant_permission">Grant permission\n</string>
+    <string name="fajr">Fajr</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="zuhr">Zuhr</string>
+    <string name="jumuaa">Jumuaa</string>
+    <string name="asr">Asr</string>
+    <string name="maghrib">Maghrib</string>
+    <string name="isha">Isha</string>
+    <string name="internet_error">No internet connection</string>
+    <string name="no_data_for_location">No prayer data found for this location</string>
+    <string name="unknown_error">Unknown error occurred</string>
+    <string name="add_location">Add location</string>
+    <string name="location_detection_failed">Location detection failed</string>
+    <string name="location_permission_rationale">Location permission is required to detect location</string>
+    <string name="gps_fail_message">Device GPS must be enabled to detect location</string>
+    <string name="lock_screen_on_time_start">Lock screen on prayer time</string>
+    <string name="pray_first">Pray First</string>
+    <string name="prayer_x_time_started">%1$s time has started</string>
+    <string name="time_to_unlock">Time left to unlock screen</string>
+
+    <string name="prayer_on_time_hadeeth">
+        Abdullah ibn Mas’ud reported: I said, “O Messenger of Allah, which deeds are best?” peace be upon him, said, “Prayer on time.” I said, “Then what, O Messenger of Allah?” The Prophet said, “Good treatment of your parents.” I said, “Then what, O Messenger of Allah?” The Prophet said, “That people are safe from your tongue.”
+    </string>
+    <string name="lock_screen_period">Lock screen period</string>
+    <string name="minutes">Minutes</string>
+</resources>
