@@ -54,13 +54,6 @@ fun getNextMonthWithYear(): Pair<String, String> {
     return monthFormatter.format(time) to yearFormatter.format(time)
 }
 
-fun getDayStart(): Long {
-    val now = Instant.now()
-    val localDateTime = LocalDateTime.ofInstant(now, ZoneId.systemDefault())
-    val startOfDay = localDateTime.withHour(0).withMinute(0).withSecond(0)
-    return startOfDay.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-}
-
 fun tomorrow(): Long =
     LocalDateTime
         .now()
@@ -76,6 +69,16 @@ fun yesterday(): Long =
         .atZone(ZoneId.systemDefault())
         .toInstant()
         .toEpochMilli()
+
+fun Long.isToday(): Boolean {
+    val currentLocalDateTime = LocalDateTime.now()
+
+    val timeLocalDateTime = LocalDateTime.ofInstant(
+        Instant.ofEpochMilli(this),
+        ZoneId.systemDefault()
+    )
+    return currentLocalDateTime.dayOfYear == timeLocalDateTime.dayOfYear
+}
 
 fun isFriday(): Boolean {
     val localDateTime = LocalDateTime.ofInstant(

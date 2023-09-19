@@ -15,6 +15,7 @@ import com.mhss.app.prayfirst.domain.repository.PrayerTimesRepository
 import com.mhss.app.prayfirst.presentation.main.LoadingState
 import com.mhss.app.prayfirst.util.getCurrentMonthWithYear
 import com.mhss.app.prayfirst.util.getNextMonthWithYear
+import com.mhss.app.prayfirst.util.isToday
 import com.mhss.app.prayfirst.util.toFormattedDate
 import com.mhss.app.prayfirst.util.tomorrow
 import com.mhss.app.prayfirst.util.yesterday
@@ -135,7 +136,7 @@ class PrayerTimesRepositoryImpl(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun getTodayPrayerTimes(): Flow<List<PrayerTime>> {
+    override fun getLatestPrayerTimes(): Flow<List<PrayerTime>> {
         return dao.getPrayerTimesByDateStream(
             System.currentTimeMillis().toFormattedDate()
         ).flatMapLatest { list ->
@@ -149,18 +150,18 @@ class PrayerTimesRepositoryImpl(
         }
     }
 
-    override suspend fun getTomorrowFirstPrayer() = withContext(Dispatchers.IO) {
-        dao.getPrayerTimeByDateAndType(
-            tomorrow().toFormattedDate(),
-            PrayerTimeType.FAJR.ordinal
-        )?.toPrayerTime()
-    }
-
-    override suspend fun getYesterdayLastPrayer() = withContext(Dispatchers.IO) {
-        dao.getPrayerTimeByDateAndType(
-            yesterday().toFormattedDate(),
-            PrayerTimeType.ISHA.ordinal
-        )?.toPrayerTime()
+    override suspend fun getLatestIsha(fajrTime: Long) = withContext(Dispatchers.IO) {
+        if (fajrTime.isToday()) {
+            dao.getPrayerTimeByDateAndType(
+                yesterday().toFormattedDate(),
+                PrayerTimeType.ISHA.ordinal
+            )?.toPrayerTime()
+        } else {
+            dao.getPrayerTimeByDateAndType(
+                System.currentTimeMillis().toFormattedDate(),
+                PrayerTimeType.ISHA.ordinal
+            )?.toPrayerTime()
+        }
     }
 
     override fun getSavedLocationTitle(): Flow<String> {

@@ -48,7 +48,7 @@ fun MainScreen(
 ) {
     val loadingState by viewModel.loadingState.collectAsStateWithLifecycle()
     val locationText by viewModel.location.collectAsStateWithLifecycle()
-    val todayPrayerTimes by viewModel.todayPrayerTimes.collectAsStateWithLifecycle()
+    val latestPrayerTimes by viewModel.latestPrayerTimes.collectAsStateWithLifecycle()
     val nextPrayerData by viewModel.nextPrayerData.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val scrollState = rememberScrollState()
@@ -169,7 +169,7 @@ fun MainScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                todayPrayerTimes.forEach { prayerTime ->
+                latestPrayerTimes.forEach { prayerTime ->
                     PrayerCard(
                         prayer = prayerTime,
                         isNextPrayer = nextPrayerData?.prayer?.nameResId == prayerTime.nameResId
