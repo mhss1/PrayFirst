@@ -2,7 +2,7 @@ package com.mhss.app.prayfirst.di
 
 import android.content.Context
 import androidx.room.Room
-import com.mhss.app.prayfirst.alarm.PrayersAlarmsManager
+import com.mhss.app.prayfirst.data.alarm.PrayersAlarmsManager
 import com.mhss.app.prayfirst.data.repository.DataStoreRepository
 import com.mhss.app.prayfirst.data.location.AndroidLocationManager
 import com.mhss.app.prayfirst.data.repository.PrayerTimesRepositoryImpl
