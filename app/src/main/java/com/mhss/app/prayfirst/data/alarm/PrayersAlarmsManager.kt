@@ -1,4 +1,4 @@
-package com.mhss.app.prayfirst.alarm
+package com.mhss.app.prayfirst.data.alarm
 
 import android.app.AlarmManager
 import android.app.PendingIntent
