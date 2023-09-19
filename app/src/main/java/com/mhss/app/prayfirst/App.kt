@@ -36,8 +36,7 @@ class App: Application() {
 
     companion object {
         @SuppressLint("StaticFieldLeak")
-        lateinit var instance: Context
-            private set
+        private lateinit var instance: Context
         fun getString(resId: Int): String = instance.getString(resId)
     }
 }
