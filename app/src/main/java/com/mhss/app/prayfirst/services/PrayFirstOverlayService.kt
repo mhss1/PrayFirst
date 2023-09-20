@@ -119,7 +119,7 @@ class PrayFirstOverlayService : Service() {
             val remainingMillis = endTimeMillis - now()
 
             timerText = remainingMillis.formatTimerTime()
-            progress = remainingMillis.toFloat() / lockTimeMillis
+            progress =  1 - remainingMillis.toFloat() / lockTimeMillis
 
             delay(1000)
         }
