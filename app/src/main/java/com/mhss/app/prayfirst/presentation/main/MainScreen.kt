@@ -1,12 +1,16 @@
 package com.mhss.app.prayfirst.presentation.main
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.PowerManager
 import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -40,6 +44,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.mhss.app.prayfirst.R
 
+@SuppressLint("BatteryLife")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun MainScreen(
@@ -57,6 +62,11 @@ fun MainScreen(
             Settings.canDrawOverlays(context)
         )
     }
+    val powerManager = remember {
+        context.getSystemService(Context.POWER_SERVICE) as PowerManager
+    }
+    val ignoringBatteryOptimizations = powerManager.isIgnoringBatteryOptimizations(context.packageName)
+
     var editMode by remember { mutableStateOf(false) }
     val drawOverlaysPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -153,8 +163,17 @@ fun MainScreen(
                     viewModel.getPrayerTimesForAddress(it)
                 }
             )
-            Spacer(Modifier.height(12.dp))
+            AnimatedVisibility(!ignoringBatteryOptimizations) {
+                BatteryOptimizationAlertCard {
+                    val intent = Intent(
+                        Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                        Uri.parse("package:${context.applicationContext.packageName}")
+                    )
+                    context.startActivity(intent)
+                }
+            }
             nextPrayerData?.let { prayerData ->
+                Spacer(Modifier.height(12.dp))
                 PrayerCountdownIndicator(
                     Modifier
                         .fillMaxWidth(0.75f),

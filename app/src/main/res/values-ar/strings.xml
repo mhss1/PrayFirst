@@ -33,4 +33,6 @@
     </string>
     <string name="lock_screen_period">مدة قفل الشاشة</string>
     <string name="minutes">دقائق</string>
+    <string name="battery_optimization_content">من المستحسن بشدة تعطيل تحسينات البطارية للتطبيق ليعمل في الخلفية بشكل متوقع خصوصا الاصدارات الجديدية</string>
+    <string name="stop_optimizations">تعطيل التحسينات</string>
 </resources>

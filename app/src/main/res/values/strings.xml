@@ -32,4 +32,6 @@
     </string>
     <string name="lock_screen_period">Lock screen period</string>
     <string name="minutes">Minutes</string>
+    <string name="battery_optimization_content">It is highly recommended to disable battery optimizations for the app to work as expected especially on new Android versions</string>
+    <string name="stop_optimizations">Stop optimizations</string>
 </resources>
