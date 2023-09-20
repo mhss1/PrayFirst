@@ -5,6 +5,7 @@ import com.mhss.app.prayfirst.data.room.PrayerTimesDao
 import com.mhss.app.prayfirst.domain.alarm.AlarmsManager
 import com.mhss.app.prayfirst.domain.model.Alarm
 import com.mhss.app.prayfirst.domain.repository.PrayerAlarmRepository
+import com.mhss.app.prayfirst.util.now
 import com.mhss.app.prayfirst.util.toFormattedDate
 import com.mhss.app.prayfirst.util.tomorrow
 
@@ -16,10 +17,10 @@ class PrayerAlarmRepositoryImpl(
 
     override suspend fun scheduleNewAlarm(type: Int) {
         val prayerTime = prayersDao.getPrayerTimeByDateAndType(
-            System.currentTimeMillis().toFormattedDate(),
+            now().toFormattedDate(),
             type
         )?.let {
-            if (it.time > System.currentTimeMillis()) {
+            if (it.time > now()) {
                 it
             } else {
                 prayersDao.getPrayerTimeByDateAndType(
@@ -53,7 +54,7 @@ class PrayerAlarmRepositoryImpl(
     override suspend fun rescheduleAlarms() {
         val alarms = alarmsDao.getAllAlarms()
         alarms.forEach {
-            val time = if (it.time > System.currentTimeMillis()) {
+            val time = if (it.time > now()) {
                 it.time
             } else {
                 prayersDao.getPrayerTimeByDateAndType(

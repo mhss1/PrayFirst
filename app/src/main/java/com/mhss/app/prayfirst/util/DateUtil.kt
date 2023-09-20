@@ -1,11 +1,14 @@
 package com.mhss.app.prayfirst.util
 
 import java.time.DayOfWeek
+import java.time.Duration
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.OffsetDateTime
 import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.DecimalStyle
 import java.util.Locale
 
 fun String.toMillis(): Long {
@@ -22,6 +25,7 @@ fun String.toMillis(): Long {
 
 fun Long.toFormattedTime(): String {
     val dateFormat = DateTimeFormatter.ofPattern("hh:mm a", Locale.getDefault())
+        .withDecimalStyle(DecimalStyle.ofDefaultLocale())
     return dateFormat.format(
         LocalDateTime.ofInstant(
             Instant.ofEpochMilli(this),
@@ -31,7 +35,8 @@ fun Long.toFormattedTime(): String {
 }
 
 fun Long.toFormattedDate(): String {
-    val dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault())
+    val dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH)
+        .withDecimalStyle(DecimalStyle.of(Locale.ENGLISH))
     return dateFormat.format(
         LocalDateTime.ofInstant(
             Instant.ofEpochMilli(this),
@@ -42,7 +47,9 @@ fun Long.toFormattedDate(): String {
 
 fun getCurrentMonthWithYear(): Pair<String, String> {
     val yearFormatter = DateTimeFormatter.ofPattern("yyyy", Locale.ENGLISH)
+        .withDecimalStyle(DecimalStyle.of(Locale.ENGLISH))
     val monthFormatter = DateTimeFormatter.ofPattern("MM", Locale.ENGLISH)
+        .withDecimalStyle(DecimalStyle.of(Locale.ENGLISH))
     val time = LocalDateTime.now()
     return monthFormatter.format(time) to yearFormatter.format(time)
 }
@@ -55,18 +62,16 @@ fun getNextMonthWithYear(): Pair<String, String> {
 }
 
 fun tomorrow(): Long =
-    LocalDateTime
+    ZonedDateTime
         .now()
         .plusDays(1)
-        .atZone(ZoneId.systemDefault())
         .toInstant()
         .toEpochMilli()
 
 fun yesterday(): Long =
-    LocalDateTime
+    ZonedDateTime
         .now()
         .minusDays(1)
-        .atZone(ZoneId.systemDefault())
         .toInstant()
         .toEpochMilli()
 
@@ -81,22 +86,26 @@ fun Long.isToday(): Boolean {
 }
 
 fun isFriday(): Boolean {
-    val localDateTime = LocalDateTime.ofInstant(
-        Instant.ofEpochMilli(System.currentTimeMillis()),
-        ZoneId.systemDefault()
-    )
+    val localDateTime = LocalDateTime.now()
     return localDateTime.dayOfWeek.value == DayOfWeek.FRIDAY.value
 }
 
+fun now() = Instant.now().toEpochMilli()
+
 fun Long.formatTimerTime(): String {
-    val localDateTime = LocalDateTime.ofInstant(
-        Instant.ofEpochMilli(this),
-        ZoneId.of("UTC")
-    )
-    val pattern = if (localDateTime.hour > 0)
-        "HH:mm:ss"
-    else
-        "mm:ss"
-    val formatter = DateTimeFormatter.ofPattern(pattern, Locale.getDefault())
-    return localDateTime.format(formatter)
+    val duration = Duration.ofMillis(this)
+    return if (duration.toHours() > 0) {
+        String.format(
+            "%02d:%02d:%02d",
+            duration.toHours(),
+            duration.toMinutes() % 60,
+            duration.seconds % 60
+        )
+    } else {
+        String.format(
+            "%02d:%02d",
+            duration.toMinutes() % 60,
+            duration.seconds % 60
+        )
+    }
 }

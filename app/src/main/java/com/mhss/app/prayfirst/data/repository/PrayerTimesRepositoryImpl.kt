@@ -16,6 +16,7 @@ import com.mhss.app.prayfirst.presentation.main.LoadingState
 import com.mhss.app.prayfirst.util.getCurrentMonthWithYear
 import com.mhss.app.prayfirst.util.getNextMonthWithYear
 import com.mhss.app.prayfirst.util.isToday
+import com.mhss.app.prayfirst.util.now
 import com.mhss.app.prayfirst.util.toFormattedDate
 import com.mhss.app.prayfirst.util.tomorrow
 import com.mhss.app.prayfirst.util.yesterday
@@ -138,10 +139,10 @@ class PrayerTimesRepositoryImpl(
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getLatestPrayerTimes(): Flow<List<PrayerTime>> {
         return dao.getPrayerTimesByDateStream(
-            System.currentTimeMillis().toFormattedDate()
+            now().toFormattedDate()
         ).flatMapLatest { list ->
             if (list.isNotEmpty() && (list.maxByOrNull { it.time }?.time
-                    ?: 0L) < System.currentTimeMillis()
+                    ?: 0L) < now()
             ) {
                 dao.getPrayerTimesByDateStream(tomorrow().toFormattedDate())
             } else flow { emit(list) }
@@ -158,7 +159,7 @@ class PrayerTimesRepositoryImpl(
             )?.toPrayerTime()
         } else {
             dao.getPrayerTimeByDateAndType(
-                System.currentTimeMillis().toFormattedDate(),
+                now().toFormattedDate(),
                 PrayerTimeType.ISHA.ordinal
             )?.toPrayerTime()
         }

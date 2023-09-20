@@ -6,6 +6,7 @@ import com.mhss.app.prayfirst.domain.location.LocationManager
 import com.mhss.app.prayfirst.domain.model.PrayerTime
 import com.mhss.app.prayfirst.domain.repository.PrayerTimesRepository
 import com.mhss.app.prayfirst.util.formatTimerTime
+import com.mhss.app.prayfirst.util.now
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -42,11 +43,11 @@ class MainViewModel @Inject constructor(
         flow {
             while(true) {
                 val nextPrayer = prayerTimes.firstOrNull { prayerTime ->
-                    prayerTime.time > System.currentTimeMillis()
+                    prayerTime.time > now()
                 } ?: return@flow
 
                 val prevPrayerTime = prayerTimes.indexOfFirst {
-                    it.time > System.currentTimeMillis()
+                    it.time > now()
                 }.let {
                     when {
                         it <= 0 -> repository.getLatestIsha(nextPrayer.time)?.time ?: return@flow
@@ -57,8 +58,8 @@ class MainViewModel @Inject constructor(
                 val endTimeMillis = nextPrayer.time
                 val totalTime = endTimeMillis - prevPrayerTime
 
-                while (System.currentTimeMillis() < endTimeMillis) {
-                    val remainingMillis = endTimeMillis - System.currentTimeMillis()
+                while (now() < endTimeMillis) {
+                    val remainingMillis = endTimeMillis - now()
                     emit(
                         NextPrayerData(
                             nextPrayer,

@@ -31,6 +31,7 @@ import com.mhss.app.prayfirst.presentation.overlay.OverlayLifecycleOwner
 import com.mhss.app.prayfirst.presentation.overlay.PrayFirstOverlay
 import com.mhss.app.prayfirst.util.formatTimerTime
 import com.mhss.app.prayfirst.util.isFriday
+import com.mhss.app.prayfirst.util.now
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -111,11 +112,11 @@ class PrayFirstOverlayService : Service() {
 
         val lockTimeMillis = prefs.get(DataStoreRepository.overlayMinutes, 10).first() * 60 * 1000
 
-        val startTimeMillis = System.currentTimeMillis()
+        val startTimeMillis = now()
         val endTimeMillis = startTimeMillis + lockTimeMillis
 
-        while (System.currentTimeMillis() < endTimeMillis) {
-            val remainingMillis = endTimeMillis - System.currentTimeMillis()
+        while (now() < endTimeMillis) {
+            val remainingMillis = endTimeMillis - now()
 
             timerText = remainingMillis.formatTimerTime()
             progress = remainingMillis.toFloat() / lockTimeMillis
