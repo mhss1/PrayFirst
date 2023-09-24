@@ -6,11 +6,11 @@ import android.content.Context
 import android.content.Intent
 import android.media.AudioFocusRequest
 import android.media.AudioManager
-import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import androidx.compose.runtime.Recomposer
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.AndroidUiDispatcher
@@ -50,7 +50,7 @@ class PrayFirstOverlayService : Service() {
     private lateinit var audioManager: AudioManager
     private var overlay: View? = null
     private var timerText by mutableStateOf("")
-    private var progress by mutableStateOf(1f)
+    private var progress by mutableFloatStateOf(1f)
 
     private val serviceScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
@@ -64,9 +64,6 @@ class PrayFirstOverlayService : Service() {
         super.onCreate()
         wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        overlay = LayoutInflater.from(this).inflate(
-            R.layout.pray_first_overlay, null
-        )
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
