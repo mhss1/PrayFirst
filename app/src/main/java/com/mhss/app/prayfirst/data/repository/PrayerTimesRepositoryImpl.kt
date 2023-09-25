@@ -117,7 +117,7 @@ class PrayerTimesRepositoryImpl(
                     DataStoreRepository.ishaLockScreen
                 ).forEach {
                     launch {
-                        val lock = prefs.get(it, false).first()
+                        val lock = prefs.get(it, true).first()
                         if (lock) {
                             alarms.scheduleNewAlarm(DataStoreRepository.lockKeyToType(it))
                         }
