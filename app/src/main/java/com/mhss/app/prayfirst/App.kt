@@ -29,7 +29,10 @@ class App: Application(), Configuration.Provider {
         super.onCreate()
         instance = this
 
-        val syncWorkRequest = PeriodicWorkRequestBuilder<SyncPrayerTimesWorker>(28, TimeUnit.DAYS)
+        val syncWorkRequest = PeriodicWorkRequestBuilder<SyncPrayerTimesWorker>(
+            28, TimeUnit.DAYS,
+            1, TimeUnit.DAYS
+        )
             .setConstraints(
                 Constraints.Builder()
                     .setRequiredNetworkType(NetworkType.CONNECTED)
